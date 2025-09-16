@@ -173,7 +173,7 @@ q++ -Vgcc_ntoaarch64le_cxx -o build/aarch64le-debug/proj-example   build/aarch64
  ## Deploying Applications/Code to a QNX Target
  In the QNX Extension on the side bar of VSCode there is a QNX Targets section which would allow us to either create/run/connect to a QNX Target. **This only really works if the QNX Target has an IP Address**, and is not recommended for use unless your QNX Target has a working IP Address. To get a IP address to the VM in WSL, its really messy and might require a reboot of your entire system, so it is not recommended to use these features of the QNX Toolchain on VSCode :(
 
- Instead, we will be creating a QNX Target on a VM (QEMU), and deploying our code, and using SCP to copy this code over to the VM to run. QEMU was mainly chosen because of its ability to run QNX on aarch64 (which is most similar to a real-world scenario).
+ Instead, we will be creating a QNX Target on a VM (QEMU). QEMU was mainly chosen because of its ability to run QNX on aarch64 (most if not all of our boards that we will run QNX on will be ARM-based rather than x86_64 based).
 
 ## Download QEMU
 ### macOS
