@@ -168,7 +168,7 @@ q++ -Vgcc_ntoaarch64le_cxx -o build/aarch64le-debug/proj-example   build/aarch64
  *  Terminal will be reused by tasks, press any key to close it. 
  ```
 
- Once this is done, we can now deploy this code onto a QNX Target to run, will be demonstrated below
+ Once this is done, we can now deploy this code onto a QNX Target to run, which will be demonstrated below.
 
  ## Deploying Applications/Code to a QNX Target
  In the QNX Extension on the side bar of VSCode there is a QNX Targets section which would allow us to either create/run/connect to a QNX Target. **This only really works if the QNX Target has an IP Address**, and is not recommended for use unless your QNX Target has a working IP Address. To get a IP address to the VM in WSL, its really messy and might require a reboot of your entire system, so it is not recommended to use these features of the QNX Toolchain on VSCode :(
