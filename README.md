@@ -146,8 +146,10 @@ To manually add this to your `settings.json` file, looks as follows:
 Your host should be now ready to cross-compile for QNX Targets with the QNX Toolchain.
 
 ## Developing and Building QNX Code on VSCode
+**[NOTE]**: As Application code for QNX is just C/C++ Code with some extra libraries (essentially), you can definitely just make a empty directory and code as if it were a normal C/C++ project. Making a new project in QNX abstracts away launch configurations (recursive make, Simple makefile, QNX CMake) and sets it all up for you. If you want to make a project/application this way, please read the relevant QNX Docs.
 
-To create a QNX-Project (Equivalent to a ROS2 Package) on VSCode, right click the file explorer, hover over QNX, and select "Build New QNX Project"
+### WSL
+To create a QNX-Project (Equivalent to a ROS2 Package) on VSCode using QNX's own toolchain, right click the file explorer, hover over QNX, and select "Build New QNX Project"
 
 [NOTE]: Source the QNX SDP Environment on the terminal that you open VSCode with. I think the extension does this anyway when it opens a workspace though (need more time to investigate this).
 
@@ -167,8 +169,16 @@ q++ -Vgcc_ntoaarch64le_cxx -c -Wp,-MMD,build/aarch64le-debug/./proj-example.d,-M
 q++ -Vgcc_ntoaarch64le_cxx -o build/aarch64le-debug/proj-example   build/aarch64le-debug/./proj-example.o  
  *  Terminal will be reused by tasks, press any key to close it. 
  ```
+**NOTE**: If you do not want to build the project using QNX's own toolchain, You can directly compile the code with q++ or qcc with the correct arguments, or by running a makefile (I would recommend this as its most similar to what wew have learnt in Uni + makes sense for larger projects)
 
- Once this is done, we can now deploy this code onto a QNX Target to run, which will be demonstrated below.
+
+ Once this is done, we can now deploy this code onto a QNX Target to run.
+
+ ### macOS
+ - Fuck me in the ass this is going to take a while
+ - Workflow --> Dev containers (from old ROS2 projects) --> Mount and Source QNX instead of sourcing ROS2. Build code manually with q++ args, or maybe set QNX's tool chain to look at QNX within WSL and build that way? (need to test)
+ - Once built, then scp onto VM
+ - TLDR i finna shoot myself
 
  ## Deploying Applications/Code to a QNX Target
  In the QNX Extension on the side bar of VSCode there is a QNX Targets section which would allow us to either create/run/connect to a QNX Target. **This only really works if the QNX Target has an IP Address**, and is not recommended for use unless your QNX Target has a working IP Address. To get a IP address to the VM in WSL, its really messy and might require a reboot of your entire system, so it is not recommended to use these features of the QNX Toolchain on VSCode :(
