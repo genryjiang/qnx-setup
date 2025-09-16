@@ -100,8 +100,7 @@ Upon determining which packages to install for QNX, just install everything (eve
 After this, click the finish button and start the install of the SDP. If you can't see the finish button, resize the window with  `win + ↑`.
 
 ### [NOTE]
-Even with all the checkboxes installed, you still might find yourself unable to create a virtual QNX image. To get by this, click the `Install New Packages` button on the landing page and download anything related to `ARM` or `aarch64` (type aarch64 in the type text search bar). I'm not sure what I downloaded to fix this, but I could generate aarch64 QNX images after downloading this package. If you still can't generated a QNX image after that has been installed, please message me individually or the group chat.
-
+Even with all the checkboxes installed, you still might find yourself unable to create a virtual QNX image. To get by this, click the `Install New Packages` button on the landing page and download anything related to `ARM` or `aarch64` (type aarch64 in the type text search bar). I'm not sure what I downloaded to fix this, but I could generate aarch64 QNX images after downloading this package. If you still can't generate a QNX image after the specified package has been installed, please message me individually or the group chat.
 
 Upon finishing, you should now have QNX's SDP installed locally. To check, source the `env-sdp.sh` file found in your install location. The command using the default install location would look as follows:
 
@@ -149,6 +148,8 @@ Your host should be now ready to cross-compile for QNX Targets with the QNX Tool
 ## Developing and Building QNX Code on VSCode
 
 To create a QNX-Project (Equivalent to a ROS2 Package) on VSCode, right click the file explorer, hover over QNX, and select "Build New QNX Project"
+
+[NOTE]: Source the QNX SDP Environment on the terminal that you open VSCode with. I think the extension does this anyway when it opens a workspace though (need more time to investigate this).
 
 <img src="images/createNewProject.png" alt="page" width="2500"/>
 
