@@ -62,7 +62,7 @@ to add later
 
 
 ## IDE + SDP Install
-Per the devblog, there are two ways to download the IDE and SDP. If you want to use the IDE + WSL, watch the tutorial on how to use the momentics IDE [here](https://www.youtube.com/watch?v=s8_rvkSfj10&t). This guide, however, will walk through how to install QNX 8.0 SDP using the GUI instead.
+Per the devblog, there are two ways to download the IDE and SDP: using the GUI or CLI. If you want to use the IDE + WSL or install via the CLI, watch the tutorial on how to use the momentics IDE [here](https://www.youtube.com/watch?v=s8_rvkSfj10&t) or read the full devblog mentioned at the beginning. This guide will only show how to install QNX 8.0 SDP using the GUI.
 
 # SDP INSTALL
 
