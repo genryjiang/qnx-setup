@@ -102,6 +102,25 @@ Upon determining which packages to install for QNX, just install everything (eve
 
 After this, click the finish button and start the install of the SDP. If you can't see the finish button, resize the window with  `win + ↑`.
 
+***
+### macOS ONLY
+Once you have installed QNX SDP 8.0, make sure you install Linux Host Tools for QNX as the docker container needs access to them.
+
+To double check that you have this installed:
+
+1. On the main (home) page of QNX Software Center (QSC), click Add Installation...
+2. Choose QNX Software Development Platform 8.0 [com.qnx.qnx800] and click Next at the bottom.
+3. Follow the rest of the wizard, making sure to install the SDP to the recommended /Users/username/qnx800 directory.
+4. When the SDP installation is complete, we can add the Linux Host Tools:
+    - Go to the Manage Installation section (left menu icon with a checkmark)
+    - Click the Available tab
+    - At the top, search for Host Tools and find QNX SDP Host Tools (Linux 64-bit) in the list
+    - Click Next at the bottom and follow the wizard to install the host tools
+
+<img src="images/qsc_host_tools-2.png" alt="page" width="2500"/>
+
+***
+
 ### [NOTE]
 Even with all the checkboxes installed, you still might find yourself unable to create a virtual QNX image. To get by this, click the `Install New Packages` button on the landing page and download anything related to `ARM` or `aarch64` (type aarch64 in the type text search bar). I'm not sure what I downloaded to fix this, but I could generate aarch64 QNX images after downloading this package. If you still can't generate a QNX image after the specified package has been installed, please message me individually or the group chat.
 
@@ -174,7 +193,6 @@ q++ -Vgcc_ntoaarch64le_cxx -o build/aarch64le-debug/proj-example   build/aarch64
  ```
 **NOTE**: If you do not want to build the project using QNX's own toolchain, You can directly compile the code with q++ or qcc with the correct arguments, or by running a makefile (I would recommend this as its most similar to what wew have learnt in Uni + makes sense for larger projects)
 
-<<<<<<< HEAD
 ***
 # macOS
 
@@ -221,12 +239,16 @@ This workflow still has some issues, however:
  Instead, we will be creating a QNX Target on a VM (QEMU). QEMU was mainly chosen because of its ability to run QNX on aarch64 (most if not all of our boards that we will run QNX on will be ARM-based rather than x86_64 based).
 
 ## Download QEMU
+
 ### macOS
 To download QEMU on macOS, use homebrew:
+
 ```zsh
 brew install qemu
 ```
+
 ### WSL
+
 ```bash
 # note: only downloading qemu for arm emulation, download qemu-system-x86_64 if you want x86_64 emulation as well
 sudo apt update
@@ -237,16 +259,20 @@ sudo apt install -y qemu-system-arm bridge-utils net-tools libvirt-clients libvi
 We will be using `mkqnximage` to create a virtual QNX OS Image to run on QEMU. Documentation can be found [here.](https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.utilities/topic/m/mkqnximage.html)
 
 To create the QNX Image, run the script found in `wsl-setup` (ASSUMES DEFAULT INSTALL PATH)
+
 ```bash
 chmod +x <PATH>/qnx-setup/generate-aarch64le-qnx.sh
 ./generate-aarch64le-qnx.sh
 ```
+
 This script will generate a Virtual QNX-Target in the location where one would have been generated using the SDP Toolchain in VSCode. It also copies `run.sh` to this folder, which can be used to boot the VM if it has been given permission.
 
 If you are having trouble making your qnx image or would like to put the image elsewhere, ensure you have sourced `qnxsdp-env.sh` and run the following command in an empty directory:
+
 ```bash
 mkqnximage --type=qemu --arch=aarch64le --hostname=qnx-a64 --build
 ```
+
 ### Creating a QNX Image (macOS)
 MacOS requires the use of a docker container to utilise the QNX 8.0 SDP. Therefore creating a QNX Image is a bit more complicated compared to WSL.
 
@@ -261,6 +287,7 @@ Docker environment should already be automatically sourced. If not, run the foll
 ```bash
 source /home/<your_docker_username>/qnx800/qnxsdp-env.sh
 ```
+
 We can make the image with the following command in the docker shell (if all necessary dependencies/packages have been installed):
 
 ```bash
@@ -273,11 +300,13 @@ Then, move `run.sh` into this directory (by hand or by copying it from the mac-s
 
 ### Running the QNX Image
 We will be using QEMU to run this generated QNX Image. Run `run.sh` to startup the emulator in a new terminal.
+
 ```bash
 cd qnxprojects/targets/qemu-qnx800-aarch64le
 chmod +x ./run.sh
 ./run.sh
 ```
+
 [NOTE]: The run script forwards port 2222 to allow for copying/sshing into the virtual target.
 
 If have moved the install to a different location or want to boot the VM with different parameters, the use the following command (what is found in `run.sh`) as a reference.
