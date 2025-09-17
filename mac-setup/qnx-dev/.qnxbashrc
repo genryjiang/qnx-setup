@@ -1,0 +1,14 @@
+# Execute welcome script
+source /usr/local/qnx/welcome.sh
+
+# Auto-source QNX environment
+if [ -f "$HOME/qnx800/qnxsdp-env.sh" ]; then
+    source "$HOME/qnx800/qnxsdp-env.sh"
+elif [ -f "/opt/qnx800/qnxsdp-env.sh" ]; then
+    source "/opt/qnx800/qnxsdp-env.sh"
+elif [ -f "/usr/local/qnx/qnx800/qnxsdp-env.sh" ]; then
+    source "/usr/local/qnx/qnx800/qnxsdp-env.sh"
+else
+    echo "Warning: QNX SDP environment script not found"
+fi
+

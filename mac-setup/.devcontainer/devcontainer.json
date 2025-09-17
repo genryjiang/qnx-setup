@@ -1,0 +1,27 @@
+{
+    "name": "qnx-build",
+
+    "dockerComposeFile": "../qnx-dev/docker-compose.yml",
+    "workspaceFolder": "/home/${localEnv:USER}",
+
+    "service": "qnx800-dev",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "twxs.cmake",
+                "eclipse-cdt.vscode-trace-extension",
+                "qnx.qnx-vscode"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    },
+
+    "postCreateCommand": "find . -type f -exec touch {} +"
+
+}

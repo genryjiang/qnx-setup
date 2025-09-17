@@ -1,0 +1,285 @@
+# FROM SR7 High level repository .gitignore
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Cache
+*/cache
+
+# Created by https://www.toptal.com/developers/gitignore/api/ros2
+# Edit at https://www.toptal.com/developers/gitignore?templates=ros2
+
+### ROS2 ###
+**/build/
+**/install/
+**/log/
+
+# Ignore generated docs
+*.dox
+*.wikidoc
+
+# eclipse stuff
+.project
+.cproject
+
+# Other stuff
+.vscode/*.db
+.vscode/*.db-shm
+.vscode/*.db-wal
+
+# qcreator stuff
+CMakeLists.txt.user
+
+srv/_*.py
+*.pcd
+*.pyc
+qtcreator-*
+*.user
+
+*~
+
+# Emacs
+.#*
+
+# End of https://www.toptal.com/developers/gitignore/api/ros2
+
+# ignore random docker compose stuff
+docker-compose.yml.save
+.gitignore.save
+
+# ignore telm aws certificates
+*.cert.pem
+*.private.key
+*.public.key
+
+.idea
+.vscode
+*.DS_Store
+cmake-build*
+*.swp
+
+# Additional common build artifacts
+**/devel/
+**/dist/
+
+# QNX specific
+*.qnx
+*.qcc
+*.o
+*.so
+*.a
+*.elf
+*.bin
+*.map
+*.sym
+*_g
+build/
+.build/
+x86/
+arm/
+aarch64/
+ppc/
+
+# C/C++ specific
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+*.dSYM/
+*.su
+*.idb
+*.pdb
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# Make
+*.d
+*.dep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.pytest_cache/
+cover/
+
+# Docker
+.dockerignore
+Dockerfile.prod
+docker-compose.override.yml
+docker-compose.prod.yml
+
+# IDE and Editor files
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/c_cpp_properties.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.cproject
+.pydevproject
+.settings/
+*.sublime-*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.tmp
+*.temp
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Archive files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Package managers
+node_modules/
+.npm
+.eslintcache
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Temporary build artifacts
+tmp/
+temp/
+.tmp/
+.temp/
+
+# ROS2 specific (since I see ros2 in your docker setup)
+install/
+log/
+.colcon_install_layout
+.colcon_build_layout
+
+# QNX SDP paths (adjust paths as needed)
+qnx700-*
+qnx800-*
+/opt/qnx*/

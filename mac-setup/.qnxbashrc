@@ -1,0 +1,29 @@
+# QNX Development Environment Setup
+# This file is sourced by all bash shells in the container
+
+# Execute welcome script
+source /usr/local/qnx/welcome.sh
+
+# Auto-source QNX environment
+if [ -f "$HOME/qnx800/qnxsdp-env.sh" ]; then
+    echo "Loading QNX SDP environment from $HOME/qnx800/qnxsdp-env.sh"
+    source "$HOME/qnx800/qnxsdp-env.sh"
+elif [ -f "/opt/qnx800/qnxsdp-env.sh" ]; then
+    echo "Loading QNX SDP environment from /opt/qnx800/qnxsdp-env.sh"
+    source "/opt/qnx800/qnxsdp-env.sh"
+elif [ -f "/usr/local/qnx/qnx800/qnxsdp-env.sh" ]; then
+    echo "Loading QNX SDP environment from /usr/local/qnx/qnx800/qnxsdp-env.sh"
+    source "/usr/local/qnx/qnx800/qnxsdp-env.sh"
+elif [ -f "${HOME}/qnx/qnx800/qnxsdp-env.sh" ]; then
+    echo "Loading QNX SDP environment from ${HOME}/qnx/qnx800/qnxsdp-env.sh"
+    source "${HOME}/qnx/qnx800/qnxsdp-env.sh"
+else
+    echo "Warning: QNX SDP environment script not found in common locations"
+    echo "Please check that QNX SDP is properly installed and mounted"
+fi
+
+# Set QNX prompt to distinguish from host
+export PS1='[QNX] (\u) \w$ '
+
+# Add any additional QNX-specific aliases or functions here
+alias qnx-version='echo "QNX SDP Version: $QNX_SDP_VERSION"'

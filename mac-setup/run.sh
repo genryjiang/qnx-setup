@@ -1,0 +1,17 @@
+qemu-system-aarch64 \
+    -machine virt-4.2 \
+    -cpu cortex-a57 \
+    -smp 2 \
+    -accel tcg \
+    -m 1G \
+    -drive file=output/disk-qemu.vmdk,if=none,id=drv0 \
+    -device virtio-blk-device,drive=drv0 \
+    -netdev user,id=net0,hostfwd=tcp::2222-:22,hostfwd=tcp::8000-:8000 \
+    -device virtio-net-device,netdev=net0,mac=52:54:00:b4:ae:64 \
+    -pidfile output/qemu.pid \
+    -nographic \
+    -kernel output/ifs.bin \
+    -serial mon:stdio \
+    -object rng-random,filename=/dev/urandom,id=rng0 \
+    -device virtio-rng-device,rng=rng0 \
+    -nographic

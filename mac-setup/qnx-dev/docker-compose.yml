@@ -1,0 +1,19 @@
+services:
+    qnx800-dev:
+        privileged: true
+        platform: "linux/amd64"
+        image: qnx800
+        container_name: qnx-build
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/home/$USER
+            - "${HOME}/.qnx:/home/${USER}/.qnx"
+            - "${HOME}/qnx800:/home/${USER}/qnx800"
+            - "${HOME}/qnxprojects:/home/${USER}/qnxprojects"
+        cap_add:
+            - NET_ADMIN
+        network_mode: host
+        stdin_open: true
+        tty: true

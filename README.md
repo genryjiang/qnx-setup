@@ -19,13 +19,14 @@ It is also important to note that development on QNX is a bit finnicky on VSCode
 
 ## Requirements
 Before continuing, please ensure you have the following downloaded:
-- WSL Extension for VSCode
+- WSL Extension for VSCode (WSL only)
 - Java Runtime 17 (required for the System Profiler)
 - Bash as your main shell for WSL2
 - CMake (for CMake project types)
 - Installation of Microsoft Visual Studio Code (of course)
 - Ubuntu 20.04, Ubuntu 22.04, or Red Hat Enterprise Linux 9
 - QEMU. You can use VMWare, VirtualBox or QVM, but this repo will use QEMU.
+- Docker (macOS only)
 
 ## INITIAL SETUP
 
@@ -47,6 +48,7 @@ cp /mnt/c/Users/<username>/Downloads/qnx-setup-<version>-linux.run .
 chmod +x qnx-setup-<version>-linux.run
 ./qnx-setup-<version>-linux.run
 ```
+
 Make sure to change anything in <> to your windows username, and  to the version that you downloaded.
 
 3. You will be prompted to read and accept the DEVELOPMENT LICENSE AGREEMENT.
@@ -54,19 +56,25 @@ Make sure to change anything in <> to your windows username, and  to the version
 Finally, if you accepted the default installation directory, the QNX Software Center will be installed at `$HOME/qnx/qnxsoftwarecenter.`
 
 ### macOS
-to add later
-- Download software centre for macOS
-- Download docker
-- download homebrew
 
+While the development workflow to cross-compile and test code for QNX on macOS does follow the development blog, this guide's workflow expands upon it with further utilisation of Docker.
 
+1. First, if you haven't, [download docker](https://docs.docker.com/desktop/setup/install/mac-install/)
+2. Download the QNX Software Centre for macOS [from the main website](https://www.qnx.com/download/feature.html?programid=58068). If you can't reach the website, you can download a copy from [the sunswift sharepoint]()
+3. Install homebrew with the following:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+```
 
 ## IDE + SDP Install
-Per the devblog, there are two ways to download the IDE and SDP: using the GUI or CLI. If you want to use the IDE + WSL or install via the CLI, watch the tutorial on how to use the momentics IDE [here](https://www.youtube.com/watch?v=s8_rvkSfj10&t) or read the full devblog mentioned at the beginning. This guide will only show how to install QNX 8.0 SDP using the GUI.
+Per the devblog, there are two ways to download the IDE and SDP: using the GUI or CLI. If you want to use the IDE + WSL or install via the CLI, watch the tutorial on [how to use the momentics IDE here](https://www.youtube.com/watch?v=s8_rvkSfj10&t) or read the full devblog mentioned at the beginning. This guide will only show how to install QNX 8.0 SDP using the GUI.
 
 # SDP INSTALL
+***
 
-### WSL ONLY
+## WSL ONLY
+
 If QNX Software Centre is not running right now, run it with the following commands (assuming that it has been installed at the default directory)
 
 ```bash
@@ -74,12 +82,7 @@ cd qnx/qnxsoftwarecenter
 ./qnxsoftwarecenter
 ```
 
-### macOS ONLY
-TODO:
-- Run and build the docker container
-- mount hard drive onto docker container and shit (maybe make anything built on the container gets sent back as well? or use container ssh directly that way)
-
-##
+---
 Upon startup, login to QNX Software Centre with either your own account or the Sunswift Developer Account.
 
 To download QNX SDP 8.0, upon landing on the home page, click **add installation**. Also ensure that your active installation is qnx800 on the bottom as well
@@ -129,7 +132,7 @@ code --install-extension ms-vscode.cpptools
 code --install-extension eclipse-cdt.vscode-trace-extension
 code --install-extension qnx.qnx-vscode
 ```
-After you havea installed the above extensions, open VSCode and open settings (either UI or the .json file).
+After you have installed the above extensions, open VSCode and open settings (either UI or the .json file).
 
 If you are using the UI, search `@ext:qnx.qnx-vscode`
 
@@ -161,14 +164,53 @@ After clicking this, you should be prompted with selecting a project name. Choos
 Writing code for QNX is then as simple as writing a C/C++ Application. Once you have finished, right click the workspace and click `Build Active Project` to build/rebuild your QNX Application. A successful build will have a QNX Debugger Output that looks like the following:
 
 ```zsh
- *  Executing task in folder proj-example: make BUILD_PROFILE=debug PLATFORM=aarch64le all 
+ *  Executing task in folder proj-example: make BUILD_PROFILE=debug PLATFORM=aarch64le all
 
 q++ -Vgcc_ntoaarch64le_cxx -c -Wp,-MMD,build/aarch64le-debug/./proj-example.d,-MT,build/aarch64le-debug/./proj-example.o -o build/aarch64le-debug/./proj-example.o  -Wall -fmessage-length=0 -fPIC -g -O0 -fno-builtin  proj-example.cpp
-q++ -Vgcc_ntoaarch64le_cxx -o build/aarch64le-debug/proj-example   build/aarch64le-debug/./proj-example.o  
- *  Terminal will be reused by tasks, press any key to close it. 
+q++ -Vgcc_ntoaarch64le_cxx -o build/aarch64le-debug/proj-example   build/aarch64le-debug/./proj-example.o
+ *  Terminal will be reused by tasks, press any key to close it.
  ```
 
- Once this is done, we can now deploy this code onto a QNX Target to run, which will be demonstrated below.
+***
+# macOS
+
+Running QNX on macOS is a bit different than on WSL.
+
+First, download and build the docker image:
+
+```bash
+# cd into the mac-setup file
+cd mac-setup
+# allow perms for building the qnx container, as we need more params to build the image
+chmod +x ./docker-build-qnx-image.sh
+# run
+./docker-build-qnx-image.sh
+```
+
+After the docker image has been built, build the container:
+
+```bash
+docker compose up -d --no-build
+```
+
+Once you've built the image once, use Dev Containers to open VSCode into you DO NOT need to rebuild as it takes ages for nothing. Choose `Dev Containers: Open Folder in Container` instead. The only time you need to rebuild is if you change `Dockerfile`, `docker-compose.yml` or `devcontainer.json`**  
+
+If the container has not been sourced, source the environment:
+
+```bash
+bash
+source qnx800/qnxsdp-env.sh
+```
+
+Note that you may or may not have to mount extra directories, which will require you to change the `docker-compose.yml`. View the directories already mounted for a reference on how to mount extra directories.
+
+This workflow still has some issues, however:
+
+- QNX SDP Toolchain extension doesn't really play nice with Dev Containers, so you will have to use the compiler or a make file like a normal C/C++ project
+- If you still want to use QNX's toolchain to generate a QNX Project, for now open the folder without dev containers, create the folder and reopen this in dev containers.
+
+
+***
 
  ## Deploying Applications/Code to a QNX Target
  In the QNX Extension on the side bar of VSCode there is a QNX Targets section which would allow us to either create/run/connect to a QNX Target. **This only really works if the QNX Target has an IP Address**, and is not recommended for use unless your QNX Target has a working IP Address. To get a IP address to the VM in WSL, its really messy and might require a reboot of your entire system, so it is not recommended to use these features of the QNX Toolchain on VSCode :(
@@ -188,7 +230,7 @@ sudo apt update
 sudo apt install -y qemu-system-arm bridge-utils net-tools libvirt-clients libvirt-daemon-system
 ```
 
-### Creating a QNX Image
+### Creating a QNX Image (WSL)
 We will be using `mkqnximage` to create a virtual QNX OS Image to run on QEMU. Documentation can be found [here.](https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.utilities/topic/m/mkqnximage.html)
 
 To create the QNX Image, run the script found in `wsl-setup` (ASSUMES DEFAULT INSTALL PATH)
@@ -202,6 +244,29 @@ If you are having trouble making your qnx image or would like to put the image e
 ```bash
 mkqnximage --type=qemu --arch=aarch64le --hostname=qnx-a64 --build
 ```
+### Creating a QNX Image (macOS)
+MacOS requires the use of a docker container to utilise the QNX 8.0 SDP. Therefore creating a QNX Image is a bit more complicated compared to WSL.
+
+First, open a shell in the docker container
+
+```bash
+docker exec -it qnx-build bash
+```
+
+Docker environment should already be automatically sourced. If not, run the following:
+
+```bash
+source /home/<your_docker_username>/qnx800/qnxsdp-env.sh
+```
+We can make the image with the following command in the docker shell (if all necessary dependencies/packages have been installed):
+
+```bash
+# command assumes everything has been installed at the default location
+mkdir -p qnxprojects/targets/qemu-qnx800-aarch64le && cd qnxprojects/targets/qemu-qnx800-aarch64le
+mkqnximage --type=qemu --arch=aarch64le --hostname=qnx-a64 --build
+```
+
+Then, move `run.sh` into this directory (by hand or by copying it from the mac-setup folder).
 
 ### Running the QNX Image
 We will be using QEMU to run this generated QNX Image. Run `run.sh` to startup the emulator in a new terminal.
@@ -215,8 +280,8 @@ chmod +x ./run.sh
 If have moved the install to a different location or want to boot the VM with different parameters, the use the following command (what is found in `run.sh`) as a reference.
 
 
-
 ```bash
+# Make sure you are in the right directory!
 qemu-system-aarch64 \
     -machine virt-4.2 \
     -cpu cortex-a57 \
@@ -270,6 +335,7 @@ scp -P 2222 -r ./my-project root@127.0.0.1:/data/
 ```
 You can then run your compiled application on the virtual target as if it were a normal C/C++ application.
 
+Note for later: you can use scp and ssh onto physical targets as well. change root@127.0.0.1 to root@(IP-address-here) and change the port as well if you need to. You can find the IP address of a QNX device with `ifconfig` on the terminal of the device (I think look at `vtnet0` for the IP address)
 
 
 
