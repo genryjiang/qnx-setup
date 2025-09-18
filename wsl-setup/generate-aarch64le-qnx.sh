@@ -52,7 +52,7 @@ cd "$DEST"
 # --- Run the build command ---
 echo "Running build in: $DEST"
 set -x
-mkqnximage --type=qemu --arch=aarch64le --hostname="${HOSTNAME}" --build
+mkqnximage --type=qemu --arch=aarch64le --ssh-ident=$HOME/.ssh/id_ed25519.pub --hostname="${HOSTNAME}" --build
 set +x
 
 echo "Done."

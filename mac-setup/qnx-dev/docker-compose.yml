@@ -12,6 +12,7 @@ services:
             - "${HOME}/.qnx:/home/${USER}/.qnx"
             - "${HOME}/qnx800:/home/${USER}/qnx800"
             - "${HOME}/qnxprojects:/home/${USER}/qnxprojects"
+            - "${HOME}/.ssh/:/home/${USER}"
         cap_add:
             - NET_ADMIN
         network_mode: host

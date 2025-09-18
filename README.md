@@ -351,14 +351,15 @@ There are multiple ways to deploy code onto a QNX Target. As this workflow is in
 ### [OPTIONAL]: SSHing into the QNX VM
 You are also able to SSH into the QNX Virtual Target if you want (this is more applicable for physical targets like a RPI).
 
-[NOTE]: I am a bit unfamiliar with SSH and do not know why I still need a password even though I turned off password authentication for the QNX Image. If anybody wants to/is bothered to fix feel free but right now I have listed a workaround
 
-1. In your QNX VM Terminal, setup a password for the qnx image with `passwd`. You will be prompted to put in a password twice.
+1. In your QNX VM Terminal, if you are using a user other than root, setup a password for the qnx image with `passwd`. You will be prompted to put in a password twice.
 2. In another terminal, `ssh` into the QNX Target. The required password is the one that you just set.
 ```bash
-ssh -p 2222 root@127.0.0.1
+ssh -p 2222 <user>@127.0.0.1
 ```
-Upon login, you will be in directory `/data/home/root`
+Note that if you are logging in as root@127.0.0.1, no password is required.
+
+Upon login, you will be in directory `/data/home/<user>`
 
 
 #### Method 1: SCP
