@@ -215,9 +215,16 @@ After the docker image has been built, build the container:
 docker compose up -d --no-build
 ```
 
-Once you've built the image once, use Dev Containers to open VSCode into you DO NOT need to rebuild as it takes ages for nothing. Choose `Dev Containers: Open Folder in Container` instead. The only time you need to rebuild is if you change `Dockerfile`, `docker-compose.yml` or `devcontainer.json`**  
+Once you've built the image once, use Dev Containers to open VSCode. `CTRL + Shift + P` and choose `Dev Containers: Open Folder in Container`. The only time you need to rebuild is if you change `Dockerfile`, `docker-compose.yml` or `devcontainer.json`
 
-If the container has not been sourced, source the environment:
+
+Open a new shell in the docker container. If you use dev containers, the default terminal would have made one already. If not, run the following:
+
+```bash
+docker exec -it qnx-build
+```
+
+Source the QNX environment if it has not been sourced already:
 
 ```bash
 bash
@@ -228,15 +235,20 @@ Note that you may or may not have to mount extra directories, which will require
 
 This workflow still has some issues, however:
 
-- QNX SDP Toolchain extension doesn't really play nice with Dev Containers, so you will have to use the compiler or a make file like a normal C/C++ project
-- If you still want to use QNX's toolchain to generate a QNX Project, for now open the folder without dev containers, create the folder and reopen this in dev containers.
+- QNX SDP Toolchain extension doesn't really play nice with Dev Containers, so you will have to use the compiler or a make file like a normal C/C++ project. Using the extension to make a new QNX Project will mess up vscode for some reason.
+
+- If you still want to use QNX's toolchain to generate a QNX Project, for now open the folder without dev containers, create the folder and reopen the directory in dev containers.
+
+- To change where QNX Projects are made with the extension, change the `Default Projects Root` in settings.
 
 
 ***
  ## Deploying Applications/Code to a QNX Target
- In the QNX Extension on the side bar of VSCode there is a QNX Targets section which would allow us to either create/run/connect to a QNX Target. **This only really works if the QNX Target has an IP Address**, and is not recommended for use unless your QNX Target has a working IP Address. To get a IP address to the VM in WSL, its really messy and might require a reboot of your entire system, so it is not recommended to use these features of the QNX Toolchain on VSCode :(
+ In the QNX Extension on the side bar of VSCode there is a QNX Targets section which would allow us to either create/run/connect to a QNX Target. **This only really works if the QNX Target has an IP Address**, and is not recommended for use unless your QNX Target has a working IP Address. To get a IP address to the VM in macOS or WSL (I think), its really messy as the current configuration uses virtual networking, so it is not recommended to use these features of the QNX Toolchain on VSCode :(
 
  Instead, we will be creating a QNX Target on a VM (QEMU). QEMU was mainly chosen because of its ability to run QNX on aarch64 (most if not all of our boards that we will run QNX on will be ARM-based rather than x86_64 based).
+
+ If you would like to use another VM such as VirtualBox or VMware, make sure to specify you are buildling for that VM by using the correct args [found in the documentation for `mkqnximage`](https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.utilities/topic/m/mkqnximage.html?ref=devblog.qnx.com).
 
 ## Download QEMU
 
