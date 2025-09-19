@@ -17,7 +17,7 @@ services:
             # QNX SDP
             - "${HOME}/qnx800:/home/${USER}/qnx800"
             # QNX Targets made by the toolchain --> mount to workspace
-            - "${HOME}/qnxprojects:/home/${USER}/qnxprojects"
+            - "${HOME}/qnxprojects:/workspace/qnxprojects"
             # SSH keys to build VM
             - "${HOME}/.ssh/:/home/${USER}/.ssh"
         working_dir: /workspace
