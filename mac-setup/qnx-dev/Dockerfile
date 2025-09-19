@@ -1,5 +1,6 @@
 # Download base image ubuntu 20.04
 FROM ubuntu:20.04
+# syntax=docker/dockerfile:1
 
 # LABEL about the custom image
 LABEL version="0.1.0"
@@ -120,12 +121,8 @@ RUN cd /usr/local/qnx && \
 	pybind11 \
 	requests
 
-WORKDIR /home/${USER_NAME}
+WORKDIR /workspace
 
-# Welcome Message
-COPY --chown=${USER_NAME}:${GROUP_NAME} ".qnxbashrc" "/usr/local/qnx"
-COPY --chown=${USER_NAME}:${GROUP_NAME} "welcome.sh" "/usr/local/qnx"
+RUN /bin/bash -c "echo 'source $HOME/qnx800/qnxsdp-env.sh' >> ~/.bashrc"
+CMD ["/bin/bash", "-i"]
 
-CMD /bin/bash --rcfile /usr/local/qnx/.qnxbashrc
-SHELL ["/bin/bash", "-c"]
-RUN echo "source $HOME/qnx800/qnxsdp-env.sh >> ~/.bashrc"

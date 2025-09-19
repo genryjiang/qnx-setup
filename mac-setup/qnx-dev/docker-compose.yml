@@ -6,13 +6,21 @@ services:
         container_name: qnx-build
         build:
             context: .
-            dockerfile: Dockerfile
+            # Don't rebuild dockerfile at all? exclude?
+            # dockerfile: Dockerfile
         volumes:
-            - ./:/home/$USER
+            # Mount project to workspace --> Change in future so similar to sr7
+            - ./:/workspace
+            # Mounts
+            # QNX License
             - "${HOME}/.qnx:/home/${USER}/.qnx"
+            # QNX SDP
             - "${HOME}/qnx800:/home/${USER}/qnx800"
+            # QNX Targets made by the toolchain --> mount to workspace
             - "${HOME}/qnxprojects:/home/${USER}/qnxprojects"
-            - "${HOME}/.ssh/:/home/${USER}"
+            # SSH keys to build VM
+            - "${HOME}/.ssh/:/home/${USER}/.ssh"
+        working_dir: /workspace
         cap_add:
             - NET_ADMIN
         network_mode: host
