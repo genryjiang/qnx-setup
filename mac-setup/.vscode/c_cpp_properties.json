@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "QNX",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:HOME}/**"
+            ],
+            "defines": [],
+            "compilerPath": "${HOME}/qnx800/host/linux/x86_64/usr/bin/ntox86_64-gcc"
+        }
+    ],
+    "version": 4
+}
