@@ -1,96 +1,5 @@
-# FROM SR7 High level repository .gitignore
-
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Cache
-*/cache
-
-# Created by https://www.toptal.com/developers/gitignore/api/ros2
-# Edit at https://www.toptal.com/developers/gitignore?templates=ros2
-
-### ROS2 ###
-**/build/
-**/install/
-**/log/
-
-# Ignore generated docs
-*.dox
-*.wikidoc
-
-# eclipse stuff
-.project
-.cproject
-
-# Other stuff
-.vscode/*.db
-.vscode/*.db-shm
-.vscode/*.db-wal
-
-# qcreator stuff
-CMakeLists.txt.user
-
-srv/_*.py
-*.pcd
-*.pyc
-qtcreator-*
-*.user
-
-*~
-
-# Emacs
-.#*
-
-# End of https://www.toptal.com/developers/gitignore/api/ros2
-
-# ignore random docker compose stuff
-docker-compose.yml.save
-.gitignore.save
-
-# ignore telm aws certificates
-*.cert.pem
-*.private.key
-*.public.key
-
-.idea
-.vscode
-*.DS_Store
-cmake-build*
-*.swp
-
-# Additional common build artifacts
-**/devel/
-**/dist/
+# This will look different from project to project, language to language.
+# There's a lot of good templates here - https://github.com/github/gitignore
 
 # QNX specific
 *.qnx
@@ -126,7 +35,6 @@ ppc/
 *.obj
 *.iobj
 *.pch
-*.pdb
 *.ipdb
 *.pgc
 *.pgd
@@ -197,8 +105,6 @@ venv.bak/
 htmlcov/
 .tox/
 .nox/
-.coverage
-.pytest_cache/
 cover/
 
 # Docker
@@ -212,6 +118,9 @@ docker-compose.prod.yml
 .vscode/launch.json
 .vscode/tasks.json
 .vscode/c_cpp_properties.json
+.vscode/
+.vscode-server/
+.vscode-test/
 .idea/
 *.swp
 *.swo
@@ -272,12 +181,6 @@ tmp/
 temp/
 .tmp/
 .temp/
-
-# ROS2 specific (since I see ros2 in your docker setup)
-install/
-log/
-.colcon_install_layout
-.colcon_build_layout
 
 # QNX SDP paths (adjust paths as needed)
 qnx700-*

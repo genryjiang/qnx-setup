@@ -10,17 +10,16 @@ services:
             # dockerfile: Dockerfile
         volumes:
             # Mount project to workspace --> Change in future so similar to sr7
-            - ./:/workspace
+            - ../:/workspace
             # Mounts
             # QNX License
             - "${HOME}/.qnx:/home/${USER}/.qnx"
             # QNX SDP
             - "${HOME}/qnx800:/home/${USER}/qnx800"
             # QNX Targets made by the toolchain --> mount to workspace
-            - "${HOME}/qnxprojects:/workspace/qnxprojects"
+            - "${HOME}/qnxprojects:/home/${USER}/qnxprojects"
             # SSH keys to build VM
             - "${HOME}/.ssh/:/home/${USER}/.ssh"
-        working_dir: /workspace
         cap_add:
             - NET_ADMIN
         network_mode: host

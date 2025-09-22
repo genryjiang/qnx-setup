@@ -2,7 +2,7 @@
     "name": "qnx-build",
 
     "dockerComposeFile": "../qnx-dev/docker-compose.yml",
-    "workspaceFolder": "/home/${localEnv:USER}",
+    "workspaceFolder": "/workspace",
 
     "service": "qnx800-dev",
 
